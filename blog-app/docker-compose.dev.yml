@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - 3000:3000
+    container_name: blog_app_dev
