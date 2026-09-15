@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "start:dev": "next dev",
+    "start:prod": "next start",
     "dev": "docker compose -f docker-compose.dev.yml up",
     "build": "next build",
-    "start": "next start",
+    "start": "docker compose up",
     "lint": "eslint"
   },
   "dependencies": {
@@ -16,13 +17,13 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
+    "@types/node": "^26.5.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
     "eslint-config-next": "16.3.5",
     "prettier": "^3.9.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^6.0.3"
   }
 }

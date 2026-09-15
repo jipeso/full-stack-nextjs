@@ -37,3 +37,10 @@ export const getBlogById = (id: number): Blog | undefined => {
 export const addBlog = (newBlog: NewBlog): void => {
   blogs.push({ id: nextId++, likes: 0, ...newBlog })
 }
+
+export const likeBlog = async (id: number) => {
+  const blog = blogs.find(blog => blog.id === id)
+  if (blog) {
+    blog.likes += 1
+  }
+}
