@@ -26,8 +26,12 @@ const blogs: Blog[] = [
 
 let nextId = 4
 
-export const getBlogs = () => {
+export const getBlogs = (): Blog[] => {
   return blogs
+}
+
+export const getBlogById = (id: number): Blog | undefined => {
+  return blogs.find(blog => blog.id === id)
 }
 
 export const addBlog = (newBlog: NewBlog): void => {
