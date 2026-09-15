@@ -5,6 +5,11 @@ import { revalidatePath } from 'next/cache'
 
 import { addBlog, likeBlog } from '../services/blogs'
 
+export const filterBlogsAction = async (formData: FormData) => {
+  const filter = formData.get('filter') as string
+  redirect(filter ? `/blogs?filter=${filter}` : '/blogs')
+}
+
 export const createBlog = async (formData: FormData) => {
   const title = formData.get('title') as string
   const author = formData.get('author') as string
