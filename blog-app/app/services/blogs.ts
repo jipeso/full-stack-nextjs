@@ -1,46 +1,28 @@
+import { eq } from 'drizzle-orm'
+import { db } from '../../db'
+import { blogs } from '../../db/schema'
 import type { Blog, NewBlog } from '../types'
 
-const blogs: Blog[] = [
-  {
-    id: 1,
-    title: 'How to Next.js',
-    author: 'Frank',
-    url: 'https://next.js.org',
-    likes: 1,
-  },
-  {
-    id: 2,
-    title: 'Basics of something important',
-    author: 'Paul',
-    url: 'https://example.com',
-    likes: 2,
-  },
-  {
-    id: 3,
-    title: 'Vercel',
-    author: 'Guillermo',
-    url: 'https://vercel.com',
-    likes: 0,
-  },
-]
-
-let nextId = 4
-
-export const getBlogs = (): Blog[] => {
-  return blogs
+export const getBlogs = async (): Promise<Blog[]> => {
+  return db.query.blogs.findMany()
 }
 
-export const getBlogById = (id: number): Blog | undefined => {
-  return blogs.find(blog => blog.id === id)
+export const getBlogById = async (id: number): Promise<Blog | undefined> => {
+  return db.query.blogs.findFirst({
+    where: eq(blogs.id, id),
+  })
 }
 
-export const addBlog = (newBlog: NewBlog): void => {
-  blogs.push({ id: nextId++, likes: 0, ...newBlog })
+export const addBlog = async (newBlog: NewBlog): Promise<void> => {
+  await db.insert(blogs).values({ ...newBlog })
 }
 
 export const likeBlog = async (id: number) => {
-  const blog = blogs.find(blog => blog.id === id)
+  const blog = await getBlogById(id)
   if (blog) {
-    blog.likes += 1
+    await db
+      .update(blogs)
+      .set({ likes: blog.likes + 1 })
+      .where(eq(blogs.id, id))
   }
 }

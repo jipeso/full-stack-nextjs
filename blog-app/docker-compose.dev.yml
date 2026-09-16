@@ -1,10 +1,13 @@
 services:
   app:
     build:
-      context: ./
+      context: .
       dockerfile: dev.Dockerfile
     volumes:
       - ./:/app
     ports:
       - 3000:3000
+      - 4983:4983
     container_name: blog_app_dev
+    env_file:
+      - .env.local
