@@ -2,7 +2,6 @@
 
 import { randomUUID } from 'crypto'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import bcrypt from 'bcryptjs'
 import { eq } from 'drizzle-orm'
 
@@ -71,6 +70,7 @@ export const registerUser = async (
     return {
       errors,
       values: { username, name, password, passwordConfirm },
+      success: false,
     }
   }
 
@@ -78,5 +78,9 @@ export const registerUser = async (
 
   await db.insert(users).values({ username, name, passwordHash })
 
-  redirect('/login')
+  return {
+    errors: {},
+    values: { username, name, password, passwordConfirm },
+    success: true,
+  }
 }

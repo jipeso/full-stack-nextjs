@@ -4,6 +4,7 @@ import { useActionState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createBlog } from '../../actions/blogs'
 import { useNotification } from '../../components/NotificationContext'
+import FormField from '../../components/FormField'
 
 const NewBlog = () => {
   const [state, formAction] = useActionState(createBlog, {
@@ -29,56 +30,29 @@ const NewBlog = () => {
       </h2>
 
       <form action={formAction} className='space-y-4'>
-        <div className='flex flex-col gap-2'>
-          <label>
-            Title
-            <input
-              type='text'
-              name='title'
-              required
-              defaultValue={state.values?.title}
-              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
-            />
-          </label>
-        </div>
+        <FormField
+          label='Title'
+          name='title'
+          required
+          defaultValue={state.values?.title}
+          error={state.errors?.title}
+        />
 
-        {state.errors?.title && (
-          <p className='text-[var(--danger)]'>{state.errors.title}</p>
-        )}
+        <FormField
+          label='Author'
+          name='author'
+          required
+          defaultValue={state.values?.author}
+          error={state.errors?.author}
+        />
 
-        <div className='flex flex-col gap-2'>
-          <label>
-            Author
-            <input
-              type='text'
-              name='author'
-              required
-              defaultValue={state.values?.author}
-              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
-            />
-          </label>
-        </div>
-
-        {state.errors?.author && (
-          <p className='text-[var(--danger)]'>{state.errors.author}</p>
-        )}
-
-        <div className='flex flex-col gap-2'>
-          <label>
-            URL
-            <input
-              type='text'
-              name='url'
-              required
-              defaultValue={state.values?.url}
-              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
-            />
-          </label>
-        </div>
-
-        {state.errors?.url && (
-          <p className='text-[var(--danger)]'>{state.errors.url}</p>
-        )}
+        <FormField
+          label='URL'
+          name='url'
+          required
+          defaultValue={state.values?.url}
+          error={state.errors?.url}
+        />
 
         <button
           type='submit'

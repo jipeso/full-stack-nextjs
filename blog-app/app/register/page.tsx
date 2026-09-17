@@ -1,82 +1,65 @@
 'use client'
 
-import { useActionState } from 'react'
-
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useNotification } from '../components/NotificationContext'
 import { registerUser } from '../actions/users'
+import FormField from '../components/FormField'
 
 export default function RegisterPage() {
   const [state, formAction] = useActionState(registerUser, {
     errors: {},
     values: { username: '', name: '', password: '', passwordConfirm: '' },
+    success: false,
   })
+
+  const { showNotification } = useNotification()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state.success) {
+      showNotification('user registered')
+      router.push('/login')
+    }
+  }, [state, showNotification, router])
+
   return (
     <div className='mx-auto max-w-xl p-6'>
       <h2 className='mb-6 text-3xl font-bold text-[var(--text)]'>Register</h2>
 
       <form action={formAction} className='space-y-4'>
-        <div className='flex flex-col gap-2'>
-          <label>
-            Username
-            <input
-              type='text'
-              name='username'
-              required
-              defaultValue={state.values?.username}
-              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
-            />
-          </label>
-        </div>
+        <FormField
+          label='Username'
+          name='username'
+          required
+          defaultValue={state.values?.username}
+          error={state.errors.username}
+        />
 
-        {state.errors.username && (
-          <p className='text-[var(--danger)]'>{state.errors.username}</p>
-        )}
+        <FormField
+          label='Name'
+          name='name'
+          required
+          defaultValue={state.values?.name}
+        />
 
-        <div className='flex flex-col gap-2'>
-          <label>
-            Name
-            <input
-              type='text'
-              name='name'
-              required
-              defaultValue={state.values?.name}
-              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
-            />
-          </label>
-        </div>
+        <FormField
+          label='Password'
+          name='password'
+          type='password'
+          required
+          defaultValue={state.values?.password}
+          error={state.errors.password}
+        />
 
-        <div className='flex flex-col gap-2'>
-          <label>
-            Password
-            <input
-              type='password'
-              name='password'
-              required
-              defaultValue={state.values?.password}
-              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
-            />
-          </label>
-        </div>
-
-        {state.errors.password && (
-          <p className='text-[var(--danger)]'>{state.errors.password}</p>
-        )}
-
-        <div className='flex flex-col gap-2'>
-          <label>
-            Confirm Password
-            <input
-              type='password'
-              name='passwordConfirm'
-              required
-              defaultValue={state.values?.passwordConfirm}
-              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
-            />
-          </label>
-        </div>
-
-        {state.errors.passwordConfirm && (
-          <p className='text-[var(--danger)]'>{state.errors.passwordConfirm}</p>
-        )}
+        <FormField
+          label='Confirm Password'
+          name='passwordConfirm'
+          type='password'
+          required
+          defaultValue={state.values?.passwordConfirm}
+          error={state.errors.passwordConfirm}
+        />
 
         <button
           type='submit'
