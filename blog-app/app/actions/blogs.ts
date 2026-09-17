@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 
-import { auth } from '@/auth'
+import { auth } from '@/app/auth'
 import { addBlog, likeBlog } from '../services/blogs'
 
 export const filterBlogsAction = async (formData: FormData) => {

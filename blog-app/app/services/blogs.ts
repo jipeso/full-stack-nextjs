@@ -1,8 +1,8 @@
 import { eq } from 'drizzle-orm'
 
 import { getCurrentUser } from './session'
-import { db } from '../../db'
-import { blogs } from '../../db/schema'
+import { db } from '@/db'
+import { blogs } from '@/db/schema'
 import type { Blog, NewBlog } from '../types'
 
 export const getBlogs = async (): Promise<Blog[]> => {
