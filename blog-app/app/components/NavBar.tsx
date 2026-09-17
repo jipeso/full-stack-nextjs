@@ -19,9 +19,10 @@ export default function NavBar() {
         <>
           <NavLink href='/blogs/new'>create new</NavLink>
           {' | '}
-          <em>{session.user?.name} logged in</em>{' '}
+          <NavLink href='/me'>me</NavLink>
+          {' | '}
           <button
-            onClick={() => signOut()}
+            onClick={() => signOut({ redirectTo: '/' })}
             className='cursor-pointer border-0 bg-transparent p-0 font-inherit text-[var(--danger)]'
           >
             logout

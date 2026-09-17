@@ -1,11 +1,30 @@
 'use server'
 
+import { randomUUID } from 'crypto'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import bcrypt from 'bcryptjs'
+import { eq } from 'drizzle-orm'
 
 import { db } from '@/db'
 import { users } from '@/db/schema'
 import { getUser } from '../services/users'
+import { getCurrentUser } from '../services/session'
+
+export const generateApiToken = async () => {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    throw new Error('Not logged in')
+  }
+
+  await db
+    .update(users)
+    .set({ token: randomUUID() })
+    .where(eq(users.id, user.id))
+
+  revalidatePath('/me')
+}
 
 export const registerUser = async (
   prevState: {
