@@ -28,13 +28,13 @@ export const createBlog = async (
 
   const errors: { title?: string; author?: string; url?: string } = {}
 
-  if (title && title.length < 5) {
+  if (title.length < 5) {
     errors.title = 'Title must be at least 5 characters long'
   }
-  if (author && author.length < 5) {
+  if (author.length < 5) {
     errors.author = 'Author must be at least 5 characters long'
   }
-  if (url && url.length < 5) {
+  if (url.length < 5) {
     errors.url = 'URL must be at least 5 characters long'
   }
 

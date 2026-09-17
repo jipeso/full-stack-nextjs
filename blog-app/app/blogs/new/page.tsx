@@ -25,9 +25,11 @@ const NewBlog = () => {
             />
           </label>
         </div>
+
         {state.errors?.title && (
           <p style={{ color: 'red' }}>{state.errors.title}</p>
         )}
+
         <div>
           <label>
             Author
@@ -39,9 +41,11 @@ const NewBlog = () => {
             />
           </label>
         </div>
+
         {state.errors?.author && (
           <p style={{ color: 'red' }}>{state.errors.author}</p>
         )}
+
         <div>
           <label>
             URL
@@ -53,9 +57,11 @@ const NewBlog = () => {
             />
           </label>
         </div>
+
         {state.errors?.url && (
           <p style={{ color: 'red' }}>{state.errors.url}</p>
         )}
+
         <button type='submit'>Create</button>
       </form>
     </div>
