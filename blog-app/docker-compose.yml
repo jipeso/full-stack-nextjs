@@ -4,3 +4,5 @@ services:
     ports:
       - 3000:3000
     container_name: blog_app_prod
+    env_file:
+      - .env.local
