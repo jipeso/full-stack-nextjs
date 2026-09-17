@@ -1,20 +1,35 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { createBlog } from '../../actions/blogs'
+import { useNotification } from '../../components/NotificationContext'
 
 const NewBlog = () => {
   const [state, formAction] = useActionState(createBlog, {
     errors: {},
     values: { title: '', author: '', url: '' },
+    success: false,
   })
 
-  return (
-    <div>
-      <h2>Create a new blog</h2>
+  const { showNotification } = useNotification()
+  const router = useRouter()
 
-      <form action={formAction}>
-        <div>
+  useEffect(() => {
+    if (state.success) {
+      showNotification('blog created')
+      router.push('/blogs')
+    }
+  }, [state, showNotification, router])
+
+  return (
+    <div className='mx-auto max-w-xl p-6'>
+      <h2 className='mb-6 text-3xl font-bold text-[var(--text)]'>
+        Create a new blog
+      </h2>
+
+      <form action={formAction} className='space-y-4'>
+        <div className='flex flex-col gap-2'>
           <label>
             Title
             <input
@@ -22,15 +37,16 @@ const NewBlog = () => {
               name='title'
               required
               defaultValue={state.values?.title}
+              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
             />
           </label>
         </div>
 
         {state.errors?.title && (
-          <p style={{ color: 'red' }}>{state.errors.title}</p>
+          <p className='text-[var(--danger)]'>{state.errors.title}</p>
         )}
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <label>
             Author
             <input
@@ -38,15 +54,16 @@ const NewBlog = () => {
               name='author'
               required
               defaultValue={state.values?.author}
+              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
             />
           </label>
         </div>
 
         {state.errors?.author && (
-          <p style={{ color: 'red' }}>{state.errors.author}</p>
+          <p className='text-[var(--danger)]'>{state.errors.author}</p>
         )}
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <label>
             URL
             <input
@@ -54,15 +71,21 @@ const NewBlog = () => {
               name='url'
               required
               defaultValue={state.values?.url}
+              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
             />
           </label>
         </div>
 
         {state.errors?.url && (
-          <p style={{ color: 'red' }}>{state.errors.url}</p>
+          <p className='text-[var(--danger)]'>{state.errors.url}</p>
         )}
 
-        <button type='submit'>Create</button>
+        <button
+          type='submit'
+          className='cursor-pointer border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 font-bold text-[var(--ink)]'
+        >
+          Create
+        </button>
       </form>
     </div>
   )

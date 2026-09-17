@@ -14,6 +14,7 @@ export const createBlog = async (
   prevState: {
     errors: { title?: string; author?: string; url?: string }
     values?: { title: string; author: string; url: string }
+    success?: boolean
   },
   formData: FormData
 ) => {
@@ -42,13 +43,19 @@ export const createBlog = async (
     return {
       errors,
       values: { title, author, url },
+      success: false,
     }
   }
 
   await addBlog({ title, author, url })
 
   revalidatePath('/blogs')
-  redirect('/blogs')
+
+  return {
+    errors: {},
+    values: { title, author, url },
+    success: true,
+  }
 }
 
 export const likeBlogAction = async (formData: FormData) => {

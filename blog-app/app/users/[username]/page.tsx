@@ -16,14 +16,26 @@ const UserPage = async ({
   }
 
   return (
-    <div>
-      <h2>{user.name}</h2>
-      <p>Username: {user.username}</p>
-      <h3>Blogs</h3>
-      <ul>
+    <div className='mx-auto max-w-2xl p-6'>
+      <h2 className='mb-2 text-3xl font-bold text-[var(--text)]'>
+        {user.name}
+      </h2>
+      <p className='text-[var(--muted)]'>Username: {user.username}</p>
+      <h3 className='mt-8 mb-3 text-xl font-bold text-[var(--accent)]'>
+        Blogs
+      </h3>
+      <ul className='space-y-2'>
         {user.blogs.map(blog => (
-          <li key={blog.id}>
-            <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+          <li
+            key={blog.id}
+            className='border border-[var(--line)] bg-[var(--panel)] p-3'
+          >
+            <Link
+              href={`/blogs/${blog.id}`}
+              className='text-[var(--text)] no-underline hover:text-[var(--accent)]'
+            >
+              {blog.title}
+            </Link>
           </li>
         ))}
       </ul>

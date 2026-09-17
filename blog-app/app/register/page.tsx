@@ -10,11 +10,11 @@ export default function RegisterPage() {
     values: { username: '', name: '', password: '', passwordConfirm: '' },
   })
   return (
-    <div>
-      <h2>Register</h2>
+    <div className='mx-auto max-w-xl p-6'>
+      <h2 className='mb-6 text-3xl font-bold text-[var(--text)]'>Register</h2>
 
-      <form action={formAction}>
-        <div>
+      <form action={formAction} className='space-y-4'>
+        <div className='flex flex-col gap-2'>
           <label>
             Username
             <input
@@ -22,15 +22,16 @@ export default function RegisterPage() {
               name='username'
               required
               defaultValue={state.values?.username}
+              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
             />
           </label>
         </div>
 
         {state.errors.username && (
-          <p style={{ color: 'red' }}>{state.errors.username}</p>
+          <p className='text-[var(--danger)]'>{state.errors.username}</p>
         )}
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <label>
             Name
             <input
@@ -38,11 +39,12 @@ export default function RegisterPage() {
               name='name'
               required
               defaultValue={state.values?.name}
+              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
             />
           </label>
         </div>
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <label>
             Password
             <input
@@ -50,15 +52,16 @@ export default function RegisterPage() {
               name='password'
               required
               defaultValue={state.values?.password}
+              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
             />
           </label>
         </div>
 
         {state.errors.password && (
-          <p style={{ color: 'red' }}>{state.errors.password}</p>
+          <p className='text-[var(--danger)]'>{state.errors.password}</p>
         )}
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <label>
             Confirm Password
             <input
@@ -66,15 +69,21 @@ export default function RegisterPage() {
               name='passwordConfirm'
               required
               defaultValue={state.values?.passwordConfirm}
+              className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
             />
           </label>
         </div>
 
         {state.errors.passwordConfirm && (
-          <p style={{ color: 'red' }}>{state.errors.passwordConfirm}</p>
+          <p className='text-[var(--danger)]'>{state.errors.passwordConfirm}</p>
         )}
 
-        <button type='submit'>Register</button>
+        <button
+          type='submit'
+          className='cursor-pointer border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 font-bold text-[var(--ink)]'
+        >
+          Register
+        </button>
       </form>
     </div>
   )
