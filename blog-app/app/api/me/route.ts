@@ -31,6 +31,10 @@ export const GET = async (req: NextRequest) => {
     id: fullUser.id,
     username: fullUser.username,
     name: fullUser.name,
-    createdBlogs: fullUser.blogs,
+    createdBlogs: fullUser.blogs.map(blog => ({
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+    })),
   })
 }
