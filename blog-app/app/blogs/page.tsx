@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { filterBlogsAction } from '../actions/blogs'
 import BlogCard from '../components/BlogCard'
 import { getBlogs } from '../services/blogs'
