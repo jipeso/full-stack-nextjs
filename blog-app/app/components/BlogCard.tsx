@@ -7,7 +7,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
     <article className='space-y-2 border border-[var(--line)] bg-[var(--panel)] p-4'>
       <Link
         href={`/blogs/${blog.id}`}
-        className='block text-lg font-semibold leading-snug text-[var(--text)] no-underline'
+        className='text-lg font-semibold leading-snug text-[var(--text)] no-underline'
       >
         {blog.title}
       </Link>

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 
 import { addToReadingListAction, likeBlogAction } from '../../actions/blogs'
 import { getBlogById } from '../../services/blogs'
+import { getCurrentUser } from '../../services/session'
 
 const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params
@@ -10,6 +11,10 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   if (!blog) {
     notFound()
   }
+
+  const user = await getCurrentUser()
+  const isInReadingList =
+    user?.readingList.some(item => item.blogId === blog.id) ?? false
 
   return (
     <div className='mx-auto max-w-2xl p-6'>
@@ -57,15 +62,17 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             Like
           </button>
         </form>
-        <form action={addToReadingListAction}>
-          <input type='hidden' name='id' value={blog.id} />
-          <button
-            type='submit'
-            className='cursor-pointer border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 font-bold text-[var(--ink)]'
-          >
-            Add to reading list
-          </button>
-        </form>
+        {user && !isInReadingList && (
+          <form action={addToReadingListAction}>
+            <input type='hidden' name='id' value={blog.id} />
+            <button
+              type='submit'
+              className='cursor-pointer border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 font-bold text-[var(--ink)]'
+            >
+              Add to reading list
+            </button>
+          </form>
+        )}
       </div>
     </div>
   )

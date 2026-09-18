@@ -1,8 +1,9 @@
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 
 import { getCurrentUser } from '../services/session'
+import { markAsReadAction } from '../actions/blogs'
 import { generateApiToken } from '../actions/users'
-import BlogCard from '../components/BlogCard'
 
 const UserPage = async () => {
   const user = await getCurrentUser()
@@ -13,23 +14,61 @@ const UserPage = async () => {
 
   return (
     <div className='mx-auto max-w-2xl p-6'>
-      <h2 className='mb-2 text-3xl font-bold text-[var(--text)]'>My Profile</h2>
+      <h2 className='mb-4 text-3xl font-bold text-[var(--text)]'>My Profile</h2>
       <p className='text-[var(--muted)]'>Name: {user.name}</p>
       <p className='text-[var(--muted)]'>Username: {user.username}</p>
       <hr className='my-8 border-[var(--line)]' />
 
-      <h2 className='mb-2 text-3xl font-bold text-[var(--text)]'>
+      <h2 className='mb-4 text-3xl font-bold text-[var(--text)]'>
         Reading List
       </h2>
-      <h3 className='mb-2 text-xl text-[var(--text)]'>
+      <h3 className='mb-4 text-xl text-[var(--text)]'>
         Unread ({user.readingList.filter(item => !item.read).length})
       </h3>
-      <ul className='space-y-2'>
+      <ul className='mb-4 space-y-2'>
         {user.readingList
           .filter(item => !item.read)
           .map(item => (
-            <li key={item.id}>
-              <BlogCard blog={item.blog} />
+            <li
+              key={item.id}
+              className='flex items-center justify-between gap-4 border border-[var(--line)] bg-[var(--panel)] p-3'
+            >
+              <Link
+                href={`/blogs/${item.blog.id}`}
+                className='flex-1 text-[var(--text)] no-underline hover:text-[var(--accent)]'
+              >
+                {item.blog.title}
+              </Link>
+              <form action={markAsReadAction}>
+                <input type='hidden' name='id' value={item.id} />
+                <button
+                  type='submit'
+                  className='cursor-pointer border border-[var(--accent)] px-3 py-1 text-sm text-[var(--accent)]'
+                >
+                  Mark as read
+                </button>
+              </form>
+            </li>
+          ))}
+      </ul>
+
+      <h3 className='mb-4 text-xl text-[var(--text)]'>
+        Read ({user.readingList.filter(item => item.read).length})
+      </h3>
+      <ul className='space-y-2'>
+        {user.readingList
+          .filter(item => item.read)
+          .map(item => (
+            <li
+              key={item.id}
+              className='border border-[var(--line)] bg-[var(--panel)] p-3 text-[var(--text)]'
+            >
+              <Link
+                href={`/blogs/${item.blog.id}`}
+                className='text-[var(--text)] no-underline hover:text-[var(--accent)]'
+              >
+                {item.blog.title}
+              </Link>
             </li>
           ))}
       </ul>

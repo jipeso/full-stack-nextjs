@@ -4,7 +4,12 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 
 import { auth } from '@/app/auth'
-import { addBlog, addBlogToReadingList, likeBlog } from '../services/blogs'
+import {
+  addBlog,
+  addBlogToReadingList,
+  likeBlog,
+  markReadingListItemAsRead,
+} from '../services/blogs'
 import { getCurrentUser } from '../services/session'
 
 export const filterBlogsAction = async (formData: FormData) => {
@@ -77,4 +82,15 @@ export const addToReadingListAction = async (formData: FormData) => {
   await addBlogToReadingList(user.id, id)
   revalidatePath('/me')
   revalidatePath(`/blogs/${id}`)
+}
+
+export const markAsReadAction = async (formData: FormData) => {
+  const user = await getCurrentUser()
+  if (!user) {
+    redirect('/login')
+  }
+
+  const id = Number(formData.get('id'))
+  await markReadingListItemAsRead(user.id, id)
+  revalidatePath('/me')
 }

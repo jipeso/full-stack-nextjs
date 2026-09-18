@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 
 import { getCurrentUser } from './session'
 import { db } from '@/db'
@@ -33,7 +33,25 @@ export const addBlogToReadingList = async (
   userId: number,
   blogId: number
 ): Promise<void> => {
+  const existingEntry = await db.query.readingList.findFirst({
+    where: and(eq(readingList.userId, userId), eq(readingList.blogId, blogId)),
+  })
+
+  if (existingEntry) {
+    return
+  }
+
   await db.insert(readingList).values({ userId, blogId })
+}
+
+export const markReadingListItemAsRead = async (
+  userId: number,
+  id: number
+): Promise<void> => {
+  await db
+    .update(readingList)
+    .set({ read: true })
+    .where(and(eq(readingList.id, id), eq(readingList.userId, userId)))
 }
 
 export const likeBlog = async (id: number) => {
