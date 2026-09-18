@@ -12,6 +12,7 @@ export const getUserWithBlogs = async (username: string) => {
     where: eq(users.username, username),
     with: {
       blogs: true,
+      readingList: true,
     },
   })
 }

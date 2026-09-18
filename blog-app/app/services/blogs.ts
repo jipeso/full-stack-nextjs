@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm'
 
 import { getCurrentUser } from './session'
 import { db } from '@/db'
-import { blogs } from '@/db/schema'
+import { blogs, readingList } from '@/db/schema'
 import type { Blog, NewBlog } from '../types'
 
 export const getBlogs = async (): Promise<Blog[]> => {
@@ -21,7 +21,19 @@ export const addBlog = async (newBlog: NewBlog): Promise<void> => {
     throw new Error('Not logged in')
   }
 
-  await db.insert(blogs).values({ ...newBlog, userId: user.id })
+  const [addedBlog] = await db
+    .insert(blogs)
+    .values({ ...newBlog, userId: user.id })
+    .returning({ id: blogs.id })
+
+  await db.insert(readingList).values({ userId: user.id, blogId: addedBlog.id })
+}
+
+export const addBlogToReadingList = async (
+  userId: number,
+  blogId: number
+): Promise<void> => {
+  await db.insert(readingList).values({ userId, blogId })
 }
 
 export const likeBlog = async (id: number) => {

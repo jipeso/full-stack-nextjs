@@ -29,6 +29,20 @@
       "when": 1789662150872,
       "tag": "0003_fearless_alex_power",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789720601688,
+      "tag": "0004_serious_microchip",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1789723582395,
+      "tag": "0005_conscious_aqueduct",
+      "breakpoints": true
     }
   ]
 }

@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import BlogCard from '../../components/BlogCard'
 import { getUserWithBlogs } from '../../services/users'
 
 const UserPage = async ({
@@ -26,16 +26,8 @@ const UserPage = async ({
       </h3>
       <ul className='space-y-2'>
         {user.blogs.map(blog => (
-          <li
-            key={blog.id}
-            className='border border-[var(--line)] bg-[var(--panel)] p-3'
-          >
-            <Link
-              href={`/blogs/${blog.id}`}
-              className='text-[var(--text)] no-underline hover:text-[var(--accent)]'
-            >
-              {blog.title}
-            </Link>
+          <li key={blog.id}>
+            <BlogCard blog={blog} />
           </li>
         ))}
       </ul>

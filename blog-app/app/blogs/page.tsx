@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { filterBlogsAction } from '../actions/blogs'
+import BlogCard from '../components/BlogCard'
 import { getBlogs } from '../services/blogs'
 
 const Blogs = async ({
@@ -34,19 +35,8 @@ const Blogs = async ({
       </form>
       <ul className='space-y-2'>
         {sortedBlogs.map(blog => (
-          <li
-            key={blog.id}
-            className='border border-[var(--line)] bg-[var(--panel)] p-4'
-          >
-            <Link
-              href={`/blogs/${blog.id}`}
-              className='text-lg text-[var(--text)] no-underline hover:text-[var(--accent)]'
-            >
-              {blog.title}
-            </Link>
-            <span className='ml-2 text-sm text-[var(--muted)]'>
-              {blog.author} {blog.url} {blog.likes}
-            </span>
+          <li key={blog.id}>
+            <BlogCard blog={blog} />
           </li>
         ))}
       </ul>
