@@ -22,17 +22,19 @@ const Blogs = async ({
       <h2 className='mb-4 text-2xl font-bold text-[var(--text)]'>Blogs</h2>
       <form action={filterBlogsAction} className='mb-6 flex gap-2'>
         <input
+          data-testid='filter-input'
           name='filter'
           className='border border-[var(--field-line)] bg-[var(--panel)] px-3 py-2 text-[var(--text)]'
         />
         <button
+          data-testid='search-button'
           type='submit'
           className='cursor-pointer border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 font-bold text-[var(--ink)]'
         >
           filter
         </button>
       </form>
-      <ul className='space-y-2'>
+      <ul data-testid='blogs-list' className='space-y-2'>
         {sortedBlogs.map(blog => (
           <li key={blog.id}>
             <BlogCard blog={blog} />

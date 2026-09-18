@@ -18,8 +18,14 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div className='mx-auto max-w-2xl p-6'>
-      <article className='border border-[var(--line)] bg-[var(--panel)] p-6'>
-        <h1 className='text-3xl font-bold leading-tight text-[var(--text)]'>
+      <article
+        data-testid='blog-detail'
+        className='border border-[var(--line)] bg-[var(--panel)] p-6'
+      >
+        <h1
+          data-testid='blog-title'
+          className='text-3xl font-bold leading-tight text-[var(--text)]'
+        >
           {blog.title}
         </h1>
         <dl className='mt-6 space-y-3 text-sm'>
@@ -27,7 +33,9 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <dt className='font-semibold uppercase tracking-wide text-[var(--muted)]'>
               Author
             </dt>
-            <dd className='mt-1 text-[var(--text)]'>{blog.author}</dd>
+            <dd data-testid='blog-author' className='mt-1 text-[var(--text)]'>
+              {blog.author}
+            </dd>
           </div>
           <div>
             <dt className='font-semibold uppercase tracking-wide text-[var(--muted)]'>
@@ -66,6 +74,7 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <form action={addToReadingListAction}>
             <input type='hidden' name='id' value={blog.id} />
             <button
+              data-testid='add-to-reading-list-button'
               type='submit'
               className='cursor-pointer border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 font-bold text-[var(--ink)]'
             >

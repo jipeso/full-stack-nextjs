@@ -9,6 +9,7 @@ export default function Notification() {
 
   return (
     <div
+      data-testid='notification'
       className={`border-b border-[var(--line)] bg-[var(--panel)] px-6 py-3 text-sm ${type === 'success' ? 'text-[var(--accent)]' : 'text-[var(--danger)]'}`}
     >
       {message}

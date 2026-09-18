@@ -22,6 +22,7 @@ export default function NavBar() {
           <NavLink href='/me'>me</NavLink>
           {' | '}
           <button
+            data-testid='logout-button'
             onClick={() => signOut({ redirectTo: '/' })}
             className='cursor-pointer border-0 bg-transparent p-0 font-inherit text-[var(--danger)]'
           >

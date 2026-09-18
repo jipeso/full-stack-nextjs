@@ -55,6 +55,7 @@ const NewBlog = () => {
         />
 
         <button
+          data-testid='create-blog-button'
           type='submit'
           className='cursor-pointer border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 font-bold text-[var(--ink)]'
         >

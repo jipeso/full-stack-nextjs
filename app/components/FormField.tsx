@@ -27,7 +27,11 @@ const FormField = ({
           className='mt-2 block w-full border border-[var(--field-line)] bg-[var(--panel)] p-3 text-[var(--text)]'
         />
       </label>
-      {error && <p className='text-[var(--danger)]'>{error}</p>}
+      {error && (
+        <p data-testid={`${name}-error`} className='text-[var(--danger)]'>
+          {error}
+        </p>
+      )}
     </div>
   )
 }
